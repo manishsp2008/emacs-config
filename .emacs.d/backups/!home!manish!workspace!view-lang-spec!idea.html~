@@ -1,0 +1,30 @@
+<html>
+
+<head>
+<title> Language specs </title>
+<link rel="stylesheet" type="text/css" href="site.css" >
+</head>
+
+<body>
+
+  <div id='header'>
+    <h1> Everything i need to know about Language specifications </h1>
+  </div>
+
+  <div id="right">
+    <h4> Important links </h4>
+    <ol>
+      <li> <a href="#">gw iDeA</a> </li>
+      <li> <a href="#">View on JLS</a> </li>
+    </ol>
+    <a href="index.html" class="home">Home</a>
+  </div>
+
+  <div id="main">
+
+  </div>
+
+
+</body>
+
+</html>  

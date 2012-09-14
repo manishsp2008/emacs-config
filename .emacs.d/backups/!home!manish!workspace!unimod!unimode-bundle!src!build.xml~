@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+
+<!-- ====================================================================== -->
+<!-- Ant XML file for building of UniMod                                    -->
+<!-- ====================================================================== -->
+
+<project name="unimod" default="help" basedir=".">
+    <target name="select_env" description="Enviroment configuration selection" unless="env">
+        <input message="Enter configuration name:" addproperty="env"/>
+    </target>
+
+    <target name="set_env" description="Enviroment configuration selection" depends="select_env">
+        <available property="env.is.available" file="../env/${env}/build.properties"/>
+        <fail unless="env.is.available" message="Enviroment configuration '${env}' doesn't exist"/>
+        <property file="../env/${env}/build.properties"/>
+        <property file="../env/common/build.properties"/>
+
+        <!-- Source files location. -->
+        <property name="lib.dir" value="${basedir}/../lib"/>
+        <property name="build.dir" value="${basedir}/../build"/>
+        <property name="Builds.dir" value="${basedir}/../../Builds"/>
+        <property name="site.dir" value="docs"/>
+
+        <property name="build.site.dir" value="${build.dir}/site"/>
+        <property name="javadocs.root" value="${build.site.dir}/src/content/api"/>
+        <property name="docs.core" value="${javadocs.root}/core"/>
+        <property name="docs.plugin" value="${javadocs.root}/plugin/eclipse"/>
+        <property name="docs.servlet" value="${javadocs.root}/servlet"/>
+        <property name="docs.standalone" value="${javadocs.root}/standalone"/>
+        <property name="docs.forrest" value="../docs/"/>
+
+        <property name="site.zip" value="${project.name}-Site-${version.release}.${version.subrelease}.${version.build}.zip"/>
+    </target>
+
+    <target name="help">
+        <echo message="help             (default) prints help on every target."/>
+        <echo message="clean            clears project builds"/>
+        <echo message="build            builds all subprojects"/>
+        <echo message="site             builds forrest docs (To run this task you need Forrest to be installed and variable tool.forrest.home should point to forrest home!)"/>
+        <echo message="dist             create dist package"/>
+        <echo message="bundles      create all dists and docs"/>
+    </target>
+
+    <target name="clean" depends="set_env">
+        <delete dir="${build.dir}"/>
+        <delete dir="${docs.forrest}"/>
+        <delete dir="plugin/eclipse/workspace"/>
+
+        <delete>
+       <fileset dir="${lib.dir}" includes="UniMod*.jar"/>
+        </delete>
+
+    <delete dir="../eclipse"/>
+        <delete dir="plugin/eclipse/lib"/>
+    </target>
+
+    <target name="build" depends="set_env">
+        <ant dir="core" target="build" inheritAll="false">
+            <property name="env" value="${env}"/>
+        </ant>
+
+        <ant dir="glayout" target="build" inheritAll="false">
+            <property name="env" value="${env}"/>
+        </ant>
+
+        <ant dir="adapter/servlet" target="build" inheritAll="false">
+            <property name="env" value="${env}"/>
+        </ant>
+
+        <ant dir="adapter/standalone" target="build" inheritAll="false">
+            <property name="env" value="${env}"/>
+        </ant>
+
+    <!-- copy libs, because plugin needs them -->
+        <copy todir="${lib.dir}">
+            <fileset dir="${build.dir}">
+                <include name="*.jar"/>
+                <!--exclude name="*src*"/-->
+                <exclude name="*docs*"/>
+            </fileset>
+        </copy>
+
+        <ant antfile="plugin/eclipse/build_plugin.xml" target="build" inheritAll="false">
+            <property name="env" value="${env}"/>
+        </ant>
+
+    <mkdir dir="../eclipse"/>
+
+        <copy todir="../eclipse">
+            <fileset dir="${build.dir}">
+                <include name="*plugin*.zip"/>
+            </fileset>              
+    </copy>
+    </target>
+
+    <target name="qbuild" depends="set_env">
+        <ant dir="core" target="qbuild" inheritAll="false">
+            <property name="env" value="${env}"/>
+        </ant>
+
+        <ant dir="glayout" target="qbuild" inheritAll="false">
+            <property name="env" value="${env}"/>
+        </ant>
+
+        <ant dir="adapter/servlet" target="qbuild" inheritAll="false">
+            <property name="env" value="${env}"/>
+        </ant>
+
+        <ant dir="adapter/standalone" target="qbuild" inheritAll="false">
+            <property name="env" value="${env}"/>
+        </ant>
+
+    <!-- copy libs, because plugin needs them -->
+        <copy todir="${lib.dir}">
+            <fileset dir="${build.dir}">
+                <include name="*.jar"/>
+                <!--exclude name="*src*"/-->
+                <exclude name="*docs*"/>
+            </fileset>
+        </copy>
+
+        <ant antfile="plugin/eclipse/build_plugin.xml" target="build" inheritAll="false">
+            <property name="env" value="${env}"/>
+        </ant>
+
+    <mkdir dir="../eclipse"/>
+
+        <copy todir="../eclipse">
+            <fileset dir="${build.dir}">
+                <include name="*plugin*.zip"/>
+            </fileset>              
+        </copy>
+
+        <copy todir="${artifactsDir}">
+            <fileset dir="${build.dir}">
+                <include name="*.*"/>
+            </fileset>              
+	</copy>
+
+    </target>
+
+    <target name="ttt" depends="set_env">
+        <ant antfile="plugin/eclipse/build_plugin.xml" target="build" inheritAll="false">
+            <property name="env" value="${env}"/>
+        </ant>
+     
+    </target>
+
+    <target name="site" depends="set_env">
+        <!-- Move site sources to build folder. -->
+        <mkdir dir="${build.site.dir}"/>
+        <copy todir="${build.site.dir}">
+            <fileset dir="${site.dir}"/>
+        </copy>
+
+        <!-- Compile JavaDocs of subporjects. -->
+        <antcall target="subproject.javadoc"/>
+
+        <!-- Copy subprojects' javadocs to site. -->
+        <delete dir="${docs.root}"/>
+        <copy todir="${docs.core}">
+            <fileset dir="${build.dir}/core/docs/api"/>
+        </copy>
+        <copy todir="${docs.servlet}">
+            <fileset dir="${build.dir}/adapter/servlet/docs/api"/>
+        </copy>
+        <copy todir="${docs.standalone}">
+            <fileset dir="${build.dir}/adapter/standalone/docs/api"/>
+        </copy>
+
+        <!-- Compile site. -->
+        <ant dir="${build.dir}/site" antfile="${forrest.home}/forrest.antproxy.xml" target="site"/>
+
+        <!-- Copy site to Stable/docs. -->
+        <delete dir="${docs.forrest}"/>
+        <copy todir="${docs.forrest}">
+            <fileset dir="${build.site.dir}/build/site"/>
+        </copy>
+
+        <!-- Zip site to deploy. -->
+        <zip destfile="${build.dir}/${site.zip}" basedir="${build.site.dir}/build/site" update="false"/>
+    </target>
+
+    <target name="subproject.javadoc" unless="not.recompile.javadoc">
+        <ant target="javadoc" inheritAll="false" dir="core">
+            <property name="env" value="${env}"/>
+        </ant>
+        <ant target="javadoc" inheritAll="false" dir="adapter/servlet">
+            <property name="env" value="${env}"/>
+        </ant>
+        <ant target="javadoc" inheritAll="false" dir="adapter/standalone">
+            <property name="env" value="${env}"/>
+        </ant>
+    </target>
+
+    <target name="dist" depends="set_env">
+        <mkdir dir="${Builds.dir}"/>
+        <zip destfile="${Builds.dir}/${project.name}-Bundle-${version.release}.${version.subrelease}.${version.build}.zip">
+            <zipfileset dir="../"
+                includes="docs/**/*, lib/**/*, samples/**/*, src/**/*, *.txt, env/default/*.*, env/common/*.*, eclipse/*.*"
+                excludes="src/docs/build/**/*, src/docs/src/content/api/**/*, **/assemble/**/*, **/build/**/*, src/plugin/eclipse/classes/**/*, src/plugin/eclipse/workspace/**/*, src/plugin/eclipse/lib/**/*, src/plugin/eclipse/build.xml, src/plugin/eclipse/plugin.xml"/>
+        </zip>
+
+        <copy todir="${Builds.dir}">
+            <fileset dir="${build.dir}">
+                <include name="*plugin*.zip"/>
+                <include name="*Site*.zip"/>
+            </fileset>              
+    </copy>
+    </target>
+
+    <target name="plugin" depends="build"/>
+
+    <target name="bundles" depends="clean, build, site, dist"/>
+</project>

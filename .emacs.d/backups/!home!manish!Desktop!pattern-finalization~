@@ -1,0 +1,32 @@
+1. Change files in a directory to lower case.
+
+   $SHELL>> rename 'y/A-Z/a-z/' *
+
+2. Convert space in a file name into hyphen
+
+   $SHELL>> ./replace-space.sh
+
+        This is a script written which replaces, spaces in a filename with a hyphen. It is located in folder names scripts with this file.
+
+
+
+<<<<<<<<< Update here if any requirements arises for new scripts >>>>>>>>>>>>>>>>
+
+Scripts used above:
+
+---------------- replace-sapce.sh----------------------
+for file in *.jsp
+do
+  if [ -f "$file" ];then
+     mv "$file" "${file// /-}"
+  fi
+done
+-------------------------------------------------------
+
+### The next challenge currently we are facing is, we need a one such platform where we can check and validate all the patterns created. Currently, we have good environment set up for creating pattenrs in netbeans. And now we need some platform where we can edit, change and run or test JSP files at once.
+
+### I am currently investigating how we can design such platform? which will majorly useful for creating very high quality patterns and ultimately will lead to very high quality practice environment for students. will update more as i get more hints on the same.
+
+### Some updates regarding validation of patterns, i have completed one round of patterns validation for pre-k and i have found it is not as tedious as it looks at first site to validate al the patterns. I think if we divide them systematically in parts and then work upon it as a time we can complete our task at much more faster pace than ever.
+I think there is much more redundancy than, we think in content as each standard. We need to sort out some way by which we can internally measure such redundancy and define some way which makes us eligible for working upon only portion which matters.
+I think by this way we can start sorting out some options available and ultimately may help us to reach upto a final level, where we will hold a complete control over our pattern related data.

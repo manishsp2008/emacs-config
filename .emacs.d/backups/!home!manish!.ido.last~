@@ -1,0 +1,45 @@
+;;; -*- coding: utf-8 -*-
+
+;; ----- ido-last-directory-list -----
+(
+ ("/home/manish/" . ".emacs.d/")
+)
+
+;; ----- ido-work-directory-list -----
+(
+ "/home/manish/workspace/view-lang-spec/"
+ "/home/manish/workspace/jQuery-File-Upload/"
+ "/home/manish/"
+ "/home/manish/.emacs.d/"
+)
+
+;; ----- ido-work-file-list -----
+(
+ "jls.html"
+ "spring-crud.html"
+ "template.html"
+ "README.md"
+ "sample.html"
+ ".emacs"
+ "init_python.el"
+)
+
+;; ----- ido-dir-file-cache -----
+(
+ ("/home/manish/workspace/view-lang-spec/" (20549 38850 260384 884000) "site.css" "../" "README.md" "spring-crud.html" ".git/" "index.html~" "./" "index.html" "template.html" "idea.html")
+
+ ("/home/manish/workspace/jQuery-File-Upload/" (20540 28118 395902 158000) ".gitignore" "../" "css/" "README.md" ".git/" "test/" "js/" "server/" "img/" "./" "index.html" "cors/" "package.json")
+
+ ("/home/manish/" (20539 4142 880721 673000) ".git-credential-cache/" ".selected_editor" ".m2/" "NetBeansProjects/" ".gnome2/" ".gconf/" ".purple/" ".ICEauthority" "Music/" ".subversion/" ".emacs.d/" "../" "Downloads/" ".pki/" ".abbrev_defs" ".emacs~" ".gtk-bookmarks" ".netbeans/" ".config/" ".goutputstream-9GO8IW" ".thunderbird/" ".local/" ".Xauthority" "Videos/" ".java/" ".bash_logout" ".xsession-errors" ".fontconfig/" ".pulse-cookie" ".gitconfig" ".dropbox/" ".goutputstream-IT6JJW" ".gegl-0.0/" ".emacs_backups/" "Downloads.rar" ".dmrc" ".cache/" ".mysql_history" "Templates/" ".eric4/" ".xsession-errors.old" ".compiz-1/" ".ido.last" ".netbeans-derby/" "Desktop/" ".gimp-2.6/" ".dropbox-dist/" ".mission-control/" "workspace/" ".gnome2_private/" ".goutputstream-RAM4IW" "./" ".pulse/" ".bash_history" ".emacs" ".mozilla/" ".lesshst" "examples.desktop" "Documents/" "Pictures/" ".gvfs/" ".thumbnails/" "Public/" ".recentf" ".bashrc" ".viminfo" ".JavaPowUpload.properties" "dead.letter" "my_docs/" ".profile" ".gstreamer-0.10/" ".dbus/" "Dropbox/")
+
+ ("/home/manish/workspace/" (20539 5908 884705 505000) "emacs-config/" "../" "awk/" "eclipse/" "unimod/" "python/" ".git/" "pet-store/" "./" "lang-specs/" "w/" "ariel/" "shiro/")
+
+ ("/home/manish/workspace/lang-specs/" (20539 5942 724705 202000) "../" "./" "index.html" ".#index.html")
+
+ ("/home/manish/.emacs.d/" (20533 64876 908361 686000) "color-theme/" "auto-save-list/" ".smex-items" "../" "init_python.el" "url/" "places" "auto-complete/" "yasnippet/" "backups/" "./" "snippets/" "init.el" "ac-dict/" "ac-comphist.dat" "pinard-Pymacs-016b0bc/" "vendor/" "elpa/")
+
+ ("/home/" (20515 21554 795728 759000) "../" "./" "manish/")
+)
+
+;; ----- ido-unc-hosts-cache -----
+t

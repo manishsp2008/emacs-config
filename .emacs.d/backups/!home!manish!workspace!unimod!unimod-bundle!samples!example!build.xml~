@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+
+<project name="Unimode_exmaple" default="help" basedir=".">
+
+    <target name="help">
+      <echo message="Supported tasks:"/>
+      <echo message=""/>
+      <echo message="build     builds client and server application"/>
+      <echo message="clean     deletes temp folders"/>
+    </target>
+
+    <property file="build.properties"/>
+    <property file="/build.properties"/>
+
+    <!-- App name-dependent settings. -->
+    <property name="appname" value="messenger"/>
+
+    <!-- Source files location. -->
+    <property name="app" value="${basedir}"/>
+    <property name="app.src" value="${app}/src"/>
+    <property name="app.lib" value="${app}/lib"/>
+    <property name="app.resources" value="${app}/resources"/>
+
+    <property name="assemble" value="${app}/assemble"/>
+    <property name="build" value="${app}/build"/>
+    <property name="build.classes" value="${build}/classes"/>
+
+    <property name="build.jar.core" value="${project.name}-Core-${version.release}.${version.subrelease}.${version.build}.jar"/>
+    <property name="build.jar.antlr" value="antlr.jar"/>
+    <property name="build.jar.common" value="Common-${version.common}.jar"/>
+    <property name="build.jar.adapter" value="${project.name}-Adapter-Standalone-${version.release}.${version.subrelease}.${version.build}.jar"/>
+
+    <!-- Set the value of this property equal to "yes" to show debug information -->
+    <property name="debug" value="no"/>
+
+    <target name="compile">
+        <echo message="Compiling sources." />
+
+        <!-- Set project's classpath -->
+        <path id="build.classpath">
+            <pathelement path="${build.classesdir}"/>
+            <fileset dir="${app.lib}" includes="*.jar"/>
+        </path>
+
+        <!--delete dir="${build.classesdir}"/-->
+        <mkdir dir="${build.classes}"/>
+
+        <echo message = "Compiling with debug [${compile.debug}] [${compile.debug.level}]" />
+        <javac srcdir="${app.src}"
+               destdir="${build.classes}"
+               verbose="${debug}"
+               deprecation="yes"
+               debug = "${compile.debug}"
+               >
+            <classpath refid="build.classpath"/>
+        </javac>
+
+    </target>
+
+    <target name="package">
+        <mkdir dir="${assemble}"/>
+
+       <copy todir="${assemble}">
+          <fileset dir="${app.resources}/diagrams" includes="*.xml"/>
+    </copy>
+
+        <copy todir="${assemble}">
+          <fileset dir="${app.lib}" includes="*.jar"/>
+    </copy>
+    </target>
+
+    <target name="package.bin" depends="clean, compile, package">
+
+        <echo message="Assembling module." />
+
+         <jar destfile="${assemble}/exmaple.jar"
+             basedir="${build.classes}"
+             includes="**/*.class, **/*.properties">
+          <manifest>
+        <attribute name="Class-Path" value="${build.jar.adapter}"/>
+        <attribute name="Main-Class" value="com.evelopers.unimod.adapter.standalone.Run" />
+      </manifest>
+    </jar>
+
+    </target>
+
+    <target name="build" depends="clean, compile, package.bin">
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- clean all build/assemble related files                              -->
+    <!-- =================================================================== -->
+    <target name="clean">
+      <delete dir="${build}"/>
+      <delete dir="${assemble}"/>
+    </target>
+
+
+</project>

@@ -1,0 +1,26 @@
+;; emacs configuration file for emacs ;;
+;; ---------------------------------- ;;
+
+;; color-theme setup for emacs
+(add-to-list 'load-path "~/.emacs.d/color-theme")
+(require 'color-theme)
+(eval-after-load "color-theme"
+  '(progn
+     (color-theme-initialize)
+     (color-theme-classic)))
+
+;; setup auto complete for emacs
+(add-to-list 'load-path "~/.emacs.d/auto-complete")
+(require 'auto-complete-config)
+(ac-config-default)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/dict")
+
+;; set up yasnippest for emacs
+(add-to-list 'load-path "~/.emacs.d/yasnippet")
+(require 'yasnippet)
+(yas-global-mode 1)
+
+;; load python init file in emacs
+;;(add-to-list 'load-path "~/.emacs.d")
+;;(load-library "init_python")
+

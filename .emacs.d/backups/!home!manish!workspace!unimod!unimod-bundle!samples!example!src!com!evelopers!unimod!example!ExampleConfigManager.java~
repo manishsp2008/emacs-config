@@ -1,0 +1,67 @@
+package com.evelopers.unimod.example;
+
+import com.evelopers.unimod.runtime.StateMachineConfig;
+import com.evelopers.unimod.runtime.StateMachineConfigManager;
+import com.evelopers.unimod.runtime.StateMachinePath;
+import com.evelopers.unimod.runtime.context.StateMachineContext;
+
+
+public class ExampleConfigManager implements StateMachineConfigManager {
+
+    private final static String FILE_NAME = "config.store";
+
+    @Override
+    public void init(
+                     StateMachinePath path, StateMachineContext context, StateMachineConfig initialConfig) {
+        store(path, context, initialConfig);
+    }
+
+    @Override
+    public StateMachineConfig load(StateMachinePath path, StateMachineContext context) {
+        Properties configs = loadConfigs(FILE_NAME);
+        if (configs.containsKey(path.toString())) {
+            StateMachineConfig config = new StateMachineConfig(configs.getProperty(path.toString()));
+            return config;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public void store(StateMachinePath path, StateMachineContext context, StateMachineConfig config) {
+        Properties configs = loadConfigs(FILE_NAME);
+        configs.setProperty(path.toString(), config.getActiveState());
+        saveConfigs(FILE_NAME, configs);
+    }
+
+    @Override
+    public void dispose(
+                        StateMachinePath path, StateMachineContext context, StateMachineConfig finalConfig) {
+        Properties configs = loadConfigs(FILE_NAME);
+        configs.remove(path.toString());
+        saveConfigs(FILE_NAME, configs);
+    }
+
+    protected Properties loadConfigs(String fileName) {
+        Properties configs = new Properties();
+        try {
+            InputStream in = new FileInputStream(fileName);
+            configs.load(in);
+        } catch (IOException e) {
+            //e.printStackTrace();
+        }
+        return configs;
+    }
+
+    protected void saveConfigs(String fileName, Properties configs) {
+        try {
+            OutputStream out = new FileOutputStream(fileName);
+            configs.store(out, "State machine configs");
+        } catch (IOException e) {
+            //e.printStackTrace();
+        }
+    }
+
+
+
+}

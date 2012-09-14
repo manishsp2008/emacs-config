@@ -1,0 +1,46 @@
+<html>
+
+<head>
+<title> Language specs </title>
+<link rel="stylesheet" type="text/css" href="site.css" >
+</head>
+
+<body>
+
+  <div id='header'>
+    <h1>Random EveryDay</h1>
+  </div>
+
+  <div id="right">
+    <h4> Important links </h4>
+    <ol>
+      <li> <a href="idea.html">gw iDeA</a> </li>
+      <li> <a href="jls.html">View on JLS</a> </li>
+      <li> <a href="spring-crud.html">Spring CRUD Tutorial</a></li>
+    </ol>
+    <a href="index.html" class="home">Home</a>
+  </div>
+
+  <div id="main">
+    <h4 style="text-align : right;"> Tue, Sep 4 2012 </h4>
+    <h2>CRUD application using Spring, Hibernate and Maven</h2>
+    <p>
+      We will create very simple CRUD application using Spring, Maven
+      and Hibernate. I will note down here step by step process.
+      Application is small guest book, where anyone can visit page and
+      locate his entry inside a page. App will store details about
+      user and time at which user has done an entry. So quite simple
+      application but important thing here is to understand a flow
+      which will get me quickly familiar with Spring app
+      development. Let's begin :-)
+    </p>
+    <h4> 1. Create project </h4>
+    <p>
+
+    </p>
+  </div>
+
+
+</body>
+
+</html>  

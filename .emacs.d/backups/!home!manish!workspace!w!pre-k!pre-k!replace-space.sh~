@@ -1,0 +1,6 @@
+for file in *.jsp
+do 
+  if [ -f "$file" ];then
+     echo mv "$file" "${file// /-}"
+  fi
+done
